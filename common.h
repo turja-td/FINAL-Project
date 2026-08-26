@@ -57,18 +57,18 @@
 #define APPOINT_CANCELLED 3
 
 // Ambulance Status Macros
-#define AMBULANCE_PENDING     0
-#define AMBULANCE_DISPATCHED  1
+#define AMBULANCE_PENDING 0
+#define AMBULANCE_DISPATCHED 1
 
 // Blood Donation Status Macros
-#define DONATE_PENDING    0
-#define DONATE_CONFIRMED  1
-#define DONATE_REJECTED   2
+#define DONATE_PENDING 0
+#define DONATE_CONFIRMED 1
+#define DONATE_REJECTED 2
 
 // Blood Donation Request Macros
-#define REQ_PENDING    0
-#define REQ_APPROVED   1
-#define REQ_REJECTED   2
+#define REQ_PENDING 0
+#define REQ_APPROVED 1
+#define REQ_REJECTED 2
 
 // Global Structures
 
