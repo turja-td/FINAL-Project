@@ -71,7 +71,6 @@
 #define REQ_REJECTED 2
 
 // Global Structures
-
 typedef struct {
     int id;
     char username[USERNAME_LEN];
