@@ -51,10 +51,10 @@
 #define ROLE_ADMIN 3
 
 // Appointment Status Macros
-#define APPOINT_PENDING 0
-#define APPOINT_CONFIRMED 1
-#define APPOINT_COMPLETED 2
-#define APPOINT_CANCELLED 3
+#define APPT_PENDING 0
+#define APPT_CONFIRMED 1
+#define APPT_COMPLETED 2
+#define APPT_CANCELLED 3
 
 // Ambulance Status Macros
 #define AMBULANCE_PENDING 0
@@ -115,7 +115,7 @@ typedef struct {
     char time[TIME_LEN];
     int status;
     int isFollowup;
-    int original_Id;  //ID of the original appointment
+    int parentId;  //ID of the original appointment
 } Appointment;
 
 

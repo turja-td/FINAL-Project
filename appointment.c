@@ -6,9 +6,10 @@
 
 int loadAppointments(Appointment list[])
 {
-    FILE *file=fopen(FILE_APPOINTMENTS,"rb")
-    if(fp==NULL)
-    return 0;
+    FILE *fp = fopen(FILE_APPOINTMENTS,"rb");
+    if(fp==NULL){
+        return 0;
+    }
     int count=fread(list,sizeof(Appointment),MAX_APPOINTMENTS,fp);
     fclose(fp);
     return count;
