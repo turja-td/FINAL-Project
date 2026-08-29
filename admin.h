@@ -1,5 +1,4 @@
-#ifndef ADMIN_H
-#define ADMIN_H
+#pragma once
 
 #include "common.h"
 
@@ -13,4 +12,3 @@ void setDefaultAdmin(void);
 
 void runAdminMenu(int adminId);
 
-#endif

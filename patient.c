@@ -161,7 +161,7 @@ void patientEditProfile(int patientId)
     char temp[ADDRESS_LEN];
 
     printf("Contact [%s]: ", list[index].contact);
-    readLine(temp, sizeof(temp));
+    readLine(temp, sizeof(list[index].contact));
     if (strlen(temp) > 0) 
     {
         strcpy(list[index].contact, temp);
@@ -175,7 +175,7 @@ void patientEditProfile(int patientId)
     }
 
     printf("New password (leave blank to keep current): ");
-    readLine(temp, sizeof(temp));
+    readLine(temp, sizeof(list[index].password));
     if (strlen(temp) > 0) 
     {
         strcpy(list[index].password, temp);

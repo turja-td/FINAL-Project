@@ -1,7 +1,6 @@
-#ifndef BLOODBANK_H
-#define BLOODBANK_H
+#pragma once
 
-void initBloodStockIfNeeded(void);
+void initializeBloodStock(void);
 
 void donateBlood(int donorId);
 void requestBlood(int requesterId, int requesterRole, int forPatientId);
@@ -15,4 +14,4 @@ void viewBloodInventory(void);
 void adminReviewBloodRequests(void);
 void adminReviewDonations(void);
 
-#endif
+

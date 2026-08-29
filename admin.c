@@ -236,7 +236,7 @@ static void updateDoctor(void){
 
     printf("\n--- Update Doctor (leave blank to keep the current value) ---\n");
 
-    char temp[SPEC_LEN];
+    char temp[NAME_LEN];
 
     printf("Name [%s]: ", list[index].name);
     readLine(temp, sizeof(temp));
@@ -246,14 +246,14 @@ static void updateDoctor(void){
     }
 
     printf("Specialization [%s]: ", list[index].specialization);
-    readLine(temp, sizeof(temp));
+    readLine(temp, sizeof(list[index].specialization));
 
     if(strlen(temp) > 0){
         strcpy(list[index].specialization, temp);
     }
 
     printf("Contact [%s]: ", list[index].contact);
-    readLine(temp, sizeof(temp));
+    readLine(temp, sizeof(list[index].contact));
 
     if(strlen(temp) > 0){
         strcpy(list[index].contact, temp);

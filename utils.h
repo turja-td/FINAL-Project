@@ -1,5 +1,4 @@
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 
 void readLine(char *buffer, int size);
 int  readInt(const char *prompt);
@@ -13,4 +12,4 @@ int containsIgnoreCase(const char *text, const char *search);
 int isValidBloodGroup(const char *bg);
 int bloodGroupIndex(const char *bg);
 
-#endif
+

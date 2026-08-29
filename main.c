@@ -46,8 +46,8 @@ static void adminEntryMenu(void) {
 }
 
 int main(void) {
-    seedDefaultAdminIfNeeded();
-    initBloodStockIfNeeded();
+    setDefaultAdmin();
+    initializeBloodStock();
 
     printf("======================================\n");
     printf("   HOSPITAL MANAGEMENT SYSTEM\n");

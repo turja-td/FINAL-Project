@@ -89,7 +89,7 @@ void rateDoctor(int patientId)
     r.patientId = patientId;
     r.appointmentId = apptId;
     r.stars = readIntRange("Stars (1-5): ", 1, 5);
-    readString("Comment: ", r.comment, COMMENT_LEN);
+    readString("Comment: ", r.comment, TEXT_LEN);
     getToday(r.date);
 
     ratings[rcount] = r;

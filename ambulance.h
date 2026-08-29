@@ -1,7 +1,5 @@
-#ifndef AMBULANCE_H
-#define AMBULANCE_H
+#pragma once
 
 void bookAmbulance(int patientId);
 void viewMyAmbulanceRequests(int patientId);
 
-#endif

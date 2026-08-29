@@ -1,5 +1,4 @@
-#ifndef PATIENT_H
-#define PATIENT_H
+#pragma once
 
 #include "common.h"
 
@@ -10,5 +9,3 @@ void registerPatient(void);
 int  loginPatient(int *outPatientId);
 void patientEditProfile(int patientId);
 void runPatientMenu(int patientId);
-
-#endif

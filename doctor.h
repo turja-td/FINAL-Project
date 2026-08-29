@@ -1,5 +1,4 @@
-#ifndef DOCTOR_H
-#define DOCTOR_H
+#pragma once
 
 #include "common.h"
 
@@ -15,4 +14,4 @@ int  pickDoctorForBooking(void);
 void doctorEditProfile(int doctorId);
 void runDoctorMenu(int doctorId);
 
-#endif
+

@@ -1,5 +1,4 @@
-#ifndef COMMON_H
-#define COMMON_H
+#pragma once
 
 
 // Size Macros
@@ -57,8 +56,8 @@
 #define APPT_CANCELLED 3
 
 // Ambulance Status Macros
-#define AMBULANCE_PENDING 0
-#define AMBULANCE_DISPATCHED 1
+#define AMB_PENDING 0
+#define AMB_DISPATCHED 1
 
 // Blood Donation Status Macros
 #define DONATE_PENDING 0
@@ -188,5 +187,3 @@ typedef struct {
 } BloodStock;
 
 
-
-#endif

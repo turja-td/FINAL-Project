@@ -1,5 +1,4 @@
-#ifdef APPOINTMENT_H
-#define APPOINTMENT_H
+#pragma once
 #include "common.h"
 
 int  loadAppointments(Appointment list[]);
@@ -11,4 +10,3 @@ void viewPatientAppointments(int patientId);
 void doctorManageAppointments(int doctorId);
 void scheduleFollowup(int doctorId, int patientId, int parentId);
 
-#endif
