@@ -94,7 +94,7 @@ int isValidDateFormat(const char *date) {
 }
 
 int isValidTimeFormat(const char *time) {
-    /* must look exactly like HH:MM, 5 characters */
+    // must look exactly like HH:MM, 5 characters
     if (strlen(time) != 5) {
         return 0;
     }
@@ -113,7 +113,7 @@ int containsIgnoreCase(const char *text, const char *search) {
     char searchCopy[200];
     int i;
 
-    /* make lowercase copies so the comparison ignores upper/lower case */
+    // make lowercase copies so the comparison ignores upper/lower case
     for (i = 0; text[i] != '\0' && i < 199; i++) {
         textCopy[i] = tolower((unsigned char) text[i]);
     }
@@ -130,13 +130,6 @@ int containsIgnoreCase(const char *text, const char *search) {
     return 0;
 }
 
-int isValidBloodGroup(const char *bg) {
-    if (bloodGroupIndex(bg) == -1) {
-        return 0;
-    }
-    return 1;
-}
-
 int bloodGroupIndex(const char *bg) {
     char groups[8][BLOODGRP_LEN] = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
     int i;
@@ -147,3 +140,11 @@ int bloodGroupIndex(const char *bg) {
     }
     return -1;
 }
+
+int isValidBloodGroup(const char *bg) {
+    if (bloodGroupIndex(bg) == -1) {
+        return 0;
+    }
+    return 1;
+}
+

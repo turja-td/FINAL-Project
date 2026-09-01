@@ -13,7 +13,7 @@ int loadDoctors(Doctor list[])
 {
     FILE *fp = fopen(FILE_DOCTORS, "rb");
 
-    if (fp == NULL) {
+    if(fp == NULL){
         return 0;
     }
 
@@ -28,7 +28,7 @@ void saveDoctors(Doctor list[], int count)
 {
     FILE *fp = fopen(FILE_DOCTORS, "wb");
 
-    if (fp == NULL) {
+    if(fp == NULL){
         printf("Error: could not save doctor data.\n");
         return;
     }
@@ -42,8 +42,8 @@ int findDoctorById(Doctor list[], int count, int id)
 {
     int i;
 
-    for (i = 0; i < count; i++) {
-        if (list[i].id == id) {
+    for(i = 0; i < count; i++){
+        if(list[i].id == id){
             return i;
         }
     }
@@ -64,16 +64,16 @@ int loginDoctor(int *outDoctorId)
 
     int i;
 
-    for (i = 0; i < count; i++) {
+    for(i = 0; i < count; i++){
 
-        if (strcmp(list[i].username, username) == 0) {
+        if (strcmp(list[i].username, username) == 0){
 
-            if (list[i].active == 0) {
+            if(list[i].active == 0){
                 printf("This doctor account has been removed by an administrator.\n");
                 return 0;
             }
 
-            if (strcmp(list[i].password, password) == 0) {
+            if(strcmp(list[i].password, password) == 0){
                 *outDoctorId = list[i].id;
                 return 1;
             }
@@ -108,21 +108,19 @@ void searchDoctors(void)
     int found = 0;
     int i;
 
-    for (i = 0; i < count; i++) {
+    for(i = 0; i < count; i++){
 
-        if (list[i].active == 0) {
+        if(list[i].active == 0){
             continue;
         }
 
-        if (containsIgnoreCase(list[i].name, term) ||
-            containsIgnoreCase(list[i].specialization, term)) {
-
+        if(containsIgnoreCase(list[i].name, term) || containsIgnoreCase(list[i].specialization, term)){
             printDoctorLine(list[i]);
             found = 1;
         }
     }
 
-    if (found == 0) {
+    if (found == 0){
         printf("No matching doctors found.\n");
     }
 }
@@ -137,28 +135,28 @@ int pickDoctorForBooking(void)
     int found = 0;
     int i;
 
-    for (i = 0; i < count; i++) {
+    for(i = 0; i < count; i++){
 
-        if (list[i].active == 1) {
+        if(list[i].active == 1){
             printDoctorLine(list[i]);
             found = 1;
         }
     }
 
-    if (found == 0) {
+    if(found == 0){
         printf("No doctors are currently available.\n");
         return -1;
     }
 
     int id = readInt("\nEnter Doctor ID to book (0 to cancel): ");
 
-    if (id == 0) {
+    if(id == 0){
         return -1;
     }
 
     int index = findDoctorById(list, count, id);
 
-    if (index == -1 || list[index].active == 0) {
+    if(index == -1 || list[index].active == 0){
         printf("Invalid doctor ID.\n");
         return -1;
     }
@@ -173,7 +171,7 @@ void doctorEditProfile(int doctorId)
 
     int index = findDoctorById(list, count, doctorId);
 
-    if (index == -1) {
+    if(index == -1){
         printf("Could not find your profile.\n");
         return;
     }
@@ -187,21 +185,21 @@ void doctorEditProfile(int doctorId)
     printf("Specialization [%s]: ", list[index].specialization);
     readLine(specialization, sizeof(specialization));
 
-    if (strlen(specialization) > 0) {
+    if(strlen(specialization) > 0){
         strcpy(list[index].specialization, specialization);
     }
 
     printf("Contact [%s]: ", list[index].contact);
     readLine(contact, sizeof(contact));
 
-    if (strlen(contact) > 0) {
+    if(strlen(contact) > 0){
         strcpy(list[index].contact, contact);
     }
 
     printf("New password (leave blank to keep current): ");
     readLine(password, sizeof(password));
 
-    if (strlen(password) > 0) {
+    if(strlen(password) > 0){
         strcpy(list[index].password, password);
     }
 
@@ -220,22 +218,15 @@ static void doctorScheduleFollowupStandalone(int doctorId)
     int found = 0;
     int i;
 
-    for (i = 0; i < count; i++) {
+    for(i = 0; i < count; i++){
 
-        if (list[i].doctorId == doctorId &&
-            list[i].status == APPT_COMPLETED) {
-
-            printf("ID %d | Patient #%d | %s %s\n",
-                   list[i].id,
-                   list[i].patientId,
-                   list[i].date,
-                   list[i].time);
-
+        if (list[i].doctorId == doctorId && list[i].status == APPT_COMPLETED){
+            printf("ID %d | Patient #%d | %s %s\n", list[i].id, list[i].patientId, list[i].date, list[i].time);
             found = 1;
         }
     }
 
-    if (found == 0) {
+    if(found == 0){
         printf("(no completed appointments yet)\n");
         return;
     }
@@ -244,16 +235,13 @@ static void doctorScheduleFollowupStandalone(int doctorId)
         "\nEnter appointment ID to schedule a follow-up for (0 to cancel): "
     );
 
-    if (apptId == 0) {
+    if(apptId == 0){
         return;
     }
 
     int index = findAppointmentById(list, count, apptId);
 
-    if (index == -1 ||
-        list[index].doctorId != doctorId ||
-        list[index].status != APPT_COMPLETED) {
-
+    if(index == -1 || list[index].doctorId != doctorId || list[index].status != APPT_COMPLETED){
         printf("Invalid appointment.\n");
         return;
     }
@@ -268,7 +256,7 @@ void runDoctorMenu(int doctorId)
 
     int index = findDoctorById(list, count, doctorId);
 
-    if (index == -1) {
+    if(index == -1){
         printf("Doctor profile not found.\n");
         return;
     }
@@ -278,7 +266,7 @@ void runDoctorMenu(int doctorId)
 
     int running = 1;
 
-    while (running) {
+    while(running){
 
         printf("\n===== Doctor Menu (Dr. %s) =====\n", name);
         printf("1. View and manage my appointments\n");
@@ -294,25 +282,25 @@ void runDoctorMenu(int doctorId)
 
         int choice = readIntRange("Choice: ", 1, 10);
 
-        if (choice == 1) {
+        if(choice == 1){
             doctorManageAppointments(doctorId);
         }
-        else if (choice == 2) {
+        else if(choice == 2){
             doctorViewPatientHistory();
         }
-        else if (choice == 3) {
+        else if(choice == 3){
             doctorPrescribeAndComplete(doctorId);
         }
-        else if (choice == 4) {
+        else if(choice == 4){
             doctorScheduleFollowupStandalone(doctorId);
         }
-        else if (choice == 5) {
+        else if(choice == 5){
             viewDoctorRatings(doctorId);
         }
-        else if (choice == 6) {
+        else if(choice == 6){
             doctorEditProfile(doctorId);
         }
-        else if (choice == 7) {
+        else if(choice == 7){
 
             Patient patients[MAX_PATIENTS];
             int pcount = loadPatients(patients);
@@ -320,20 +308,20 @@ void runDoctorMenu(int doctorId)
             int patientId =
                 readInt("Which Patient ID is this blood request for? ");
 
-            if (findPatientById(patients, pcount, patientId) == -1) {
+            if(findPatientById(patients, pcount, patientId) == -1){
                 printf("No patient found with that ID.\n");
             }
-            else {
+            else{
                 requestBlood(doctorId, ROLE_DOCTOR, patientId);
             }
         }
-        else if (choice == 8) {
+        else if(choice == 8){
             viewBloodInventory();
         }
-        else if (choice == 9) {
+        else if(choice == 9){
             viewMyBloodRequestsDoctor(doctorId);
         }
-        else if (choice == 10) {
+        else if(choice == 10){
             printf("Logging out...\n");
             running = 0;
         }

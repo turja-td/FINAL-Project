@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
 #include "medrecord.h"
 #include "common.h"
 #include "utils.h"
@@ -9,7 +9,7 @@
 static int loadMedRecords(MedRecord list[]) 
 {
     FILE *fp = fopen(FILE_MEDRECORDS, "rb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         return 0;
     }
@@ -21,7 +21,7 @@ static int loadMedRecords(MedRecord list[])
 static void saveMedRecords(MedRecord list[], int count)
  {
     FILE *fp = fopen(FILE_MEDRECORDS, "wb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         printf("Error!could not save medical record data.\n");
         return;
@@ -33,7 +33,7 @@ static void saveMedRecords(MedRecord list[], int count)
 static int loadPrescriptions(Prescription list[])
 {
     FILE *fp = fopen(FILE_PRESCRIPTIONS, "rb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         return 0;
     }
@@ -45,7 +45,7 @@ static int loadPrescriptions(Prescription list[])
 static void savePrescriptions(Prescription list[], int count) 
 {
     FILE *fp = fopen(FILE_PRESCRIPTIONS, "wb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         printf("Error: could not save prescription data.\n");
         return;
@@ -62,22 +62,22 @@ void doctorPrescribeAndComplete(int doctorId)
 
     printf("\n--- My Confirmed Appointments (ready to complete) ---\n");
     int found = 0;
-    for (i = 0; i < acount; i++) {
+    for(i = 0; i < acount; i++){
         if (appts[i].doctorId == doctorId && appts[i].status == APPT_CONFIRMED) {
             printf("ID %d | Patient #%d | %s %s\n", appts[i].id, appts[i].patientId, appts[i].date, appts[i].time);
             found = 1;
         }
     }
-    if (found == 0) {
+    if(found == 0){
         printf("(none - an appointment must be CONFIRMED before it can be completed)\n");
         return;
     }
 
     int apptId = readInt("\nEnter appointment ID to treat and complete (0 to cancel): ");
-    if (apptId == 0) return;
+    if(apptId == 0) return;
 
     int index = findAppointmentById(appts, acount, apptId);
-    if (index == -1 || appts[index].doctorId != doctorId || appts[index].status != APPT_CONFIRMED) {
+    if(index == -1 || appts[index].doctorId != doctorId || appts[index].status != APPT_CONFIRMED) {
         printf("Invalid appointment, or it isn't CONFIRMED yet.\n");
         return;
     }
@@ -85,7 +85,7 @@ void doctorPrescribeAndComplete(int doctorId)
     char today[DATE_LEN];
     getToday(today);
 
-    /* 1) write a diagnosis / medical record */
+    // Diagnosis writing
     MedRecord recs[MAX_MEDRECORDS];
     int rcount = loadMedRecords(recs);
     MedRecord m;
@@ -99,7 +99,7 @@ void doctorPrescribeAndComplete(int doctorId)
     rcount = rcount + 1;
     saveMedRecords(recs, rcount);
 
-    /* 2) optional prescription */
+    // Prescription writing
     char answer[8];
     readString("Prescribe medicines and/or tests? (y/n): ", answer, sizeof(answer));
     if (answer[0] == 'y' || answer[0] == 'Y') {
@@ -120,7 +120,7 @@ void doctorPrescribeAndComplete(int doctorId)
         printf("Prescription saved.\n");
     }
 
-    /* 3) mark the appointment completed */
+    
     appts[index].status = APPT_COMPLETED;
     saveAppointments(appts, acount);
     printf("\nAppointment #%d marked COMPLETED.\n", apptId);
@@ -139,7 +139,7 @@ void doctorViewPatientHistory(void)
     Patient patients[MAX_PATIENTS];
     int pcount = loadPatients(patients);
     int pindex = findPatientById(patients, pcount, patientId);
-    if (pindex == -1) {
+    if(pindex == -1){
         printf("No patient found with that ID.\n");
         return;
     }
@@ -150,25 +150,30 @@ void doctorViewPatientHistory(void)
     int rcount = loadMedRecords(recs);
     int found = 0;
     int i;
-    for (i = 0; i < rcount; i++) {
-        if (recs[i].patientId == patientId) {
+    for(i = 0; i < rcount; i++){
+        if(recs[i].patientId == patientId){
             printf("[%s] Dr#%d -- %s\n", recs[i].date, recs[i].doctorId, recs[i].diagnosis);
             found = 1;
         }
     }
-    if (found == 0) printf("(no medical records yet)\n");
+    
+    if(found == 0){
+        printf("(no medical records yet)\n");
+    }    
 
     printf("\n--- Prescriptions ---\n");
     Prescription pres[MAX_PRESCRIPTIONS];
     int prcount = loadPrescriptions(pres);
     found = 0;
-    for (i = 0; i < prcount; i++) {
-        if (pres[i].patientId == patientId) {
+    for(i = 0; i < prcount; i++){
+        if(pres[i].patientId == patientId){
             printf("[%s] Dr#%d -- Meds: %s | Tests: %s\n", pres[i].date, pres[i].doctorId, pres[i].medicines, pres[i].tests);
             found = 1;
         }
     }
-    if (found == 0) printf("(no prescriptions yet)\n");
+    if(found == 0){
+        printf("(no prescriptions yet)\n");
+    } 
 }
 
 void viewPatientPrescriptions(int patientId) 
@@ -179,14 +184,15 @@ void viewPatientPrescriptions(int patientId)
     printf("\n--- My Prescriptions and Tests ---\n");
     int found = 0;
     int i;
-    for (i = 0; i < count; i++) {
-        if (pres[i].patientId == patientId) {
-            printf("[%s] Dr#%d\n  Medicines: %s\n  Tests: %s\n  Notes: %s\n",
-                   pres[i].date, pres[i].doctorId, pres[i].medicines, pres[i].tests, pres[i].notes);
+    for(i = 0; i < count; i++){
+        if(pres[i].patientId == patientId){
+            printf("[%s] Dr#%d\n  Medicines: %s\n  Tests: %s\n  Notes: %s\n", pres[i].date, pres[i].doctorId, pres[i].medicines, pres[i].tests, pres[i].notes);
             found = 1;
         }
     }
-    if (found == 0) printf("(none yet)\n");
+    if (found == 0){
+        printf("(none yet)\n");
+    }
 }
 
 void viewPatientMedicalHistory(int patientId) {
@@ -196,11 +202,13 @@ void viewPatientMedicalHistory(int patientId) {
     printf("\n--- My Medical History ---\n");
     int found = 0;
     int i;
-    for (i = 0; i < count; i++) {
-        if (recs[i].patientId == patientId) {
+    for(i = 0; i < count; i++){
+        if(recs[i].patientId == patientId){
             printf("[%s] Dr#%d -- %s\n", recs[i].date, recs[i].doctorId, recs[i].diagnosis);
             found = 1;
         }
     }
-    if (found == 0) printf("(none yet)\n");
+    if (found == 0){
+        printf("(none yet)\n");
+    } 
 }

@@ -13,8 +13,9 @@
 int loadPatients(Patient list[]) 
 {
     FILE *fp = fopen(FILE_PATIENTS, "rb");
-    if (fp == NULL) {
-        return 0; /* file does not exist yet, so there are no patients */
+    if(fp == NULL)
+    {
+        return 0;
     }
     int count = fread(list, sizeof(Patient), MAX_PATIENTS, fp);
     fclose(fp);
@@ -24,7 +25,7 @@ int loadPatients(Patient list[])
 void savePatients(Patient list[], int count) 
 {
     FILE *fp = fopen(FILE_PATIENTS, "wb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         printf("Error: could not save patient data.\n");
         return;
@@ -36,9 +37,9 @@ void savePatients(Patient list[], int count)
 int findPatientById(Patient list[], int count, int id) 
 {
     int i;
-    for (i = 0; i < count; i++) 
+    for(i = 0; i < count; i++) 
     {
-        if (list[i].id == id) 
+        if(list[i].id == id) 
         {
             return i;
         }
@@ -49,9 +50,9 @@ int findPatientById(Patient list[], int count, int id)
 static int usernameTakenPatient(Patient list[], int count, const char *username) 
 {
     int i;
-    for (i = 0; i < count; i++) 
+    for(i = 0; i < count; i++) 
     {
-        if (strcmp(list[i].username, username) == 0) 
+        if(strcmp(list[i].username, username) == 0) 
         {
             return 1;
         }
@@ -64,7 +65,7 @@ void registerPatient(void)
     Patient list[MAX_PATIENTS];
     int count = loadPatients(list);
 
-    if (count >= MAX_PATIENTS)
+    if(count >= MAX_PATIENTS)
     {
         printf("Sorry, the patient list is full.\n");
         return;
@@ -76,7 +77,7 @@ void registerPatient(void)
     while (1) 
     {
         readString("Choose a username: ", p.username, USERNAME_LEN);
-        if (usernameTakenPatient(list, count, p.username)) 
+        if(usernameTakenPatient(list, count, p.username)) 
         {
             printf("That username is already taken, please choose another.\n");
         } 
@@ -96,7 +97,7 @@ void registerPatient(void)
     while (1) 
     {
         readString("Blood group (A+, A-, B+, B-, AB+, AB-, O+, O-): ", p.bloodGroup, BLOODGRP_LEN);
-        if (isValidBloodGroup(p.bloodGroup)) 
+        if(isValidBloodGroup(p.bloodGroup)) 
         {
             break;
         }
@@ -123,16 +124,16 @@ int loginPatient(int *outPatientId)
     readString("Password: ", password, PASSWORD_LEN);
 
     int i;
-    for (i = 0; i < count; i++) 
+    for(i = 0; i < count; i++) 
     {
-        if (strcmp(list[i].username, username) == 0) 
+        if(strcmp(list[i].username, username) == 0) 
         {
-            if (list[i].active == 0) 
+            if(list[i].active == 0) 
             {
                 printf("This account has been deactivated.\n");
                 return 0;
             }
-            if (strcmp(list[i].password, password) == 0) 
+            if(strcmp(list[i].password, password) == 0) 
             {
                 *outPatientId = list[i].id;
                 return 1;
@@ -188,7 +189,7 @@ void patientEditProfile(int patientId)
 static void patientBookAppointmentFlow(int patientId) 
 {
     int doctorId = pickDoctorForBooking();
-    if (doctorId == -1) 
+    if(doctorId == -1) 
     {
         return;
     }
@@ -201,7 +202,7 @@ static void patientViewDoctorRatingsFlow(void)
     int count = loadDoctors(doctors);
     int doctorId = readInt("Enter Doctor ID to view ratings for: ");
     int index = findDoctorById(doctors, count, doctorId);
-    if (index == -1) 
+    if(index == -1) 
     {
         printf("No doctor found with that ID.\n");
         return;
@@ -220,23 +221,23 @@ static void patientBloodBankMenu(int patientId)
     printf("6. Back\n");
 
     int choice = readIntRange("Choice: ", 1, 6);
-    if (choice == 1) 
+    if(choice == 1) 
     {
         donateBlood(patientId);
     } 
-    else if (choice == 2) 
+    else if(choice == 2) 
     {
         requestBlood(patientId, ROLE_PATIENT, patientId);
     } 
-    else if (choice == 3) 
+    else if(choice == 3) 
     {
         viewMyDonations(patientId);
     } 
-    else if (choice == 4) 
+    else if(choice == 4) 
     {
         viewMyBloodRequestsPatient(patientId);
     } 
-    else if (choice == 5) 
+    else if(choice == 5) 
     {
         viewBloodInventory();
     }
@@ -248,17 +249,17 @@ void runPatientMenu(int patientId)
     int count = loadPatients(list);
     int index = findPatientById(list, count, patientId);
 
-    if (index == -1) 
+    if(index == -1) 
     {
-    printf("Patient profile not found.\n");
-    return;
+        printf("Patient profile not found.\n");
+        return;
     }
 
     char name[NAME_LEN];
     strcpy(name, list[index].name);
 
     int running = 1;
-    while (running) 
+    while(running) 
     {
         printf("\n===== Patient Menu (%s) =====\n", name);
         printf("1. Search doctors\n");
@@ -276,51 +277,51 @@ void runPatientMenu(int patientId)
 
         int choice = readIntRange("Choice: ", 1, 12);
 
-        if (choice == 1) 
+        if(choice == 1) 
         {
             searchDoctors();
         } 
-        else if (choice == 2) 
+        else if(choice == 2) 
         {
             patientBookAppointmentFlow(patientId);
         } 
-        else if (choice == 3) 
+        else if(choice == 3) 
         {
             bookAmbulance(patientId);
         } 
-        else if (choice == 4) 
+        else if(choice == 4) 
         {
             viewPatientAppointments(patientId);
         } 
-        else if (choice == 5) 
+        else if(choice == 5) 
         {
             viewPatientPrescriptions(patientId);
         } 
-        else if (choice == 6) 
+        else if(choice == 6) 
         {
             viewPatientMedicalHistory(patientId);
         } 
-        else if (choice == 7) 
+        else if(choice == 7) 
         {
             rateDoctor(patientId);
         } 
-        else if (choice == 8) 
+        else if(choice == 8) 
         {
             patientViewDoctorRatingsFlow();
         } 
-        else if (choice == 9) 
+        else if(choice == 9) 
         {
             patientEditProfile(patientId);
         } 
-        else if (choice == 10) 
+        else if(choice == 10) 
         {
             patientBloodBankMenu(patientId);
         } 
-        else if (choice == 11) 
+        else if(choice == 11) 
         {
             viewMyAmbulanceRequests(patientId);
         } 
-        else if (choice == 12) 
+        else if(choice == 12) 
         {
             printf("Logging out...\n");
             running = 0;

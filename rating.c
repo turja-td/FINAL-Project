@@ -9,7 +9,7 @@
 static int loadRatings(Rating list[]) 
 {
     FILE *fp = fopen(FILE_RATINGS, "rb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         return 0;
     }
@@ -21,7 +21,7 @@ static int loadRatings(Rating list[])
 static void saveRatings(Rating list[], int count) 
 {
     FILE *fp = fopen(FILE_RATINGS, "wb");
-    if (fp == NULL) 
+    if(fp == NULL) 
     {
         printf("Error: could not save rating data.\n");
         return;
@@ -40,12 +40,12 @@ void rateDoctor(int patientId)
 
     printf("\n--- Completed Appointments You Can Rate ---\n");
     int found = 0;
-    for (i = 0; i < acount; i++) 
+    for(i = 0; i < acount; i++) 
     {
-        if (appts[i].patientId != patientId || appts[i].status != APPT_COMPLETED) continue;
+        if(appts[i].patientId != patientId || appts[i].status != APPT_COMPLETED) continue;
 
         int alreadyRated = 0;
-        for (j = 0; j < rcount; j++) 
+        for(j = 0; j < rcount; j++) 
         {
             if (ratings[j].appointmentId == appts[i].id) 
             {
@@ -53,30 +53,35 @@ void rateDoctor(int patientId)
                 break;
             }
         }
-        if (alreadyRated) continue;
+        if(alreadyRated)
+        {
+            continue;
+        }
 
         printf("Appointment ID %d | Doctor #%d | %s\n", appts[i].id, appts[i].doctorId, appts[i].date);
         found = 1;
     }
-    if (found == 0) 
+    if(found == 0) 
     {
         printf("(nothing left to rate)\n");
         return;
     }
 
     int apptId = readInt("\nEnter appointment ID to rate (0 to cancel): ");
-    if (apptId == 0) 
-    return;
+    if(apptId == 0)
+    {
+        return;
+    }
 
     int aindex = findAppointmentById(appts, acount, apptId);
-    if (aindex == -1 || appts[aindex].patientId != patientId || appts[aindex].status != APPT_COMPLETED) 
+    if(aindex == -1 || appts[aindex].patientId != patientId || appts[aindex].status != APPT_COMPLETED) 
     {
         printf("Invalid appointment.\n");
         return;
     }
-    for (j = 0; j < rcount; j++) 
+    for(j = 0; j < rcount; j++) 
     {
-        if (ratings[j].appointmentId == apptId) 
+        if(ratings[j].appointmentId == apptId) 
         {
             printf("You have already rated this appointment.\n");
             return;
@@ -119,7 +124,7 @@ void viewDoctorRatings(int doctorId)
     int dcount = loadDoctors(doctors);
     int dindex = findDoctorById(doctors, dcount, doctorId);
 
-    if (dindex != -1) 
+    if(dindex != -1) 
     {
         printf("\n--- Ratings for Dr. %s (average %.1f from %d review(s)) ---\n", doctors[dindex].name, doctors[dindex].avgRating, doctors[dindex].ratingCount);
     } 
@@ -130,13 +135,16 @@ void viewDoctorRatings(int doctorId)
 
     int found = 0;
     int i;
-    for (i = 0; i < count; i++) 
+    for(i = 0; i < count; i++) 
     {
-        if (ratings[i].doctorId == doctorId) 
+        if(ratings[i].doctorId == doctorId) 
         {
             printf("[%s] %d/5 stars -- \"%s\"\n", ratings[i].date, ratings[i].stars, ratings[i].comment);
             found = 1;
         }
     }
-    if (found == 0) printf("(no ratings yet)\n");
+    if(found == 0)
+    {
+        printf("(no ratings yet)\n");
+    }
 }

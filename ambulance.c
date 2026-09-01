@@ -8,8 +8,7 @@
 static int loadAmbulance(Ambulance list[]) 
 {
     FILE *fp = fopen(FILE_AMBULANCE, "rb");
-    if (fp == NULL) 
-    {
+    if(fp == NULL){
         return 0;
     }
     int count = fread(list, sizeof(Ambulance), MAX_AMBULANCE, fp);
@@ -20,8 +19,7 @@ static int loadAmbulance(Ambulance list[])
 static void saveAmbulance(Ambulance list[], int count) 
 {
     FILE *fp = fopen(FILE_AMBULANCE, "wb");
-    if (fp == NULL) 
-    {
+    if(fp == NULL){
         printf("Error: could not save ambulance data.\n");
         return;
     }
@@ -34,8 +32,7 @@ void bookAmbulance(int patientId)
     Ambulance list[MAX_AMBULANCE];
     int count = loadAmbulance(list);
 
-    if (count >= MAX_AMBULANCE) 
-    {
+    if(count >= MAX_AMBULANCE){
         printf("Sorry, the ambulance request list is full.\n");
         return;
     }
@@ -67,15 +64,13 @@ void viewMyAmbulanceRequests(int patientId)
     printf("\n--- My Ambulance Requests ---\n");
     int found = 0;
     int i;
-    for (i = 0; i < count; i++) 
-    {
-        if (list[i].patientId == patientId) 
-        {
+    for(i = 0; i < count; i++){
+        if(list[i].patientId == patientId){
             const char *statusText = (list[i].status == AMB_PENDING) ? "PENDING" : "DISPATCHED";
             printf("ID %d | %s | %s | Status: %s\n", list[i].id, list[i].location, list[i].requestTime, statusText);
             found = 1;
         }
     }
-    if (found == 0) 
+    if(found == 0) 
         printf("(none yet)\n");
 }

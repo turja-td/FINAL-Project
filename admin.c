@@ -79,7 +79,7 @@ int loginAdmin(int *outAdminId){
                 return 1;
             }
 
-            printf("Incorrect password.\n");
+            printf("Incorrect username or password.\n");
             return 0;
         }
     }

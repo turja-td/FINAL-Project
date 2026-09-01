@@ -54,12 +54,12 @@ const char *appointmentStatusText(int status)
 }
 
 int bookAppointment(int patientId, int doctorId)
- {
+{
     Appointment list[MAX_APPOINTMENTS];
     int count = loadAppointments(list);
 
     if (count >= MAX_APPOINTMENTS)
-     {
+    {
         printf("Sorry, the appointment list is full.\n");
         return -1;
     }
@@ -70,7 +70,7 @@ int bookAppointment(int patientId, int doctorId)
     a.doctorId = doctorId;
 
     while (1)
-     {
+    {
         readString("Appointment date (YYYY-MM-DD): ", a.date, DATE_LEN);
         if (isValidDateFormat(a.date)) break;
         printf("Please use the format YYYY-MM-DD.\n");
@@ -95,7 +95,7 @@ int bookAppointment(int patientId, int doctorId)
 }
 
 void viewPatientAppointments(int patientId)
- {
+{
     Appointment list[MAX_APPOINTMENTS];
     int count = loadAppointments(list);
     int i;
@@ -103,10 +103,10 @@ void viewPatientAppointments(int patientId)
     printf("\n--- Upcoming / Pending Appointments ---\n");
     int found = 0;
     for (i = 0; i < count; i++)
-     {
+    {
         if (list[i].patientId != patientId) continue;
         if (list[i].status == APPT_PENDING || list[i].status == APPT_CONFIRMED)
-         {
+        {
             printf("ID %d | Doctor #%d | %s %s | %s%s\n",
                    list[i].id, list[i].doctorId, list[i].date, list[i].time,
                    appointmentStatusText(list[i].status),
@@ -122,7 +122,7 @@ void viewPatientAppointments(int patientId)
     {
         if (list[i].patientId != patientId) continue;
         if (list[i].status == APPT_COMPLETED || list[i].status == APPT_CANCELLED)
-         {
+        {
             printf("ID %d | Doctor #%d | %s %s | %s%s\n",
                    list[i].id, list[i].doctorId, list[i].date, list[i].time,
                    appointmentStatusText(list[i].status),
@@ -150,23 +150,23 @@ void doctorManageAppointments(int doctorId)
                list[i].isFollowup ? " (follow-up)" : "");
         found = 1;
     }
-    if (found == 0) 
+    if(found == 0) 
     {
         printf("(none)\n");
         return;
     }
 
     int id = readInt("\nEnter appointment ID to update (0 to go back): ");
-    if (id == 0)
+    if(id == 0)
      return;
 
     int index = findAppointmentById(list, count, id);
-    if (index == -1 || list[index].doctorId != doctorId)
+    if(index == -1 || list[index].doctorId != doctorId)
     {
         printf("Invalid appointment ID.\n");
         return;
     }
-    if (list[index].status == APPT_COMPLETED || list[index].status == APPT_CANCELLED) 
+    if(list[index].status == APPT_COMPLETED || list[index].status == APPT_CANCELLED) 
     {
         printf("This appointment is already %s.\n", appointmentStatusText(list[index].status));
         return;
@@ -175,12 +175,12 @@ void doctorManageAppointments(int doctorId)
     printf("1. Confirm\n2. Cancel\n3. Back\n");
     printf("(To mark it COMPLETED, use option 3 'Prescribe and complete' in the doctor menu instead.)\n");
     int choice = readIntRange("Choice: ", 1, 3);
-    if (choice == 1) 
+    if(choice == 1) 
     {
         list[index].status = APPT_CONFIRMED;
         saveAppointments(list, count);
         printf("Appointment confirmed.\n");
-    } else if (choice == 2) 
+    } else if(choice == 2) 
     {
         list[index].status = APPT_CANCELLED;
         saveAppointments(list, count);
@@ -192,7 +192,7 @@ void scheduleFollowup(int doctorId, int patientId, int parentId) {
     Appointment list[MAX_APPOINTMENTS];
     int count = loadAppointments(list);
 
-    if (count >= MAX_APPOINTMENTS) {
+    if(count >= MAX_APPOINTMENTS) {
         printf("Sorry, the appointment list is full.\n");
         return;
     }
@@ -202,12 +202,12 @@ void scheduleFollowup(int doctorId, int patientId, int parentId) {
     a.patientId = patientId;
     a.doctorId = doctorId;
 
-    while (1) {
+    while(1){
         readString("Follow-up date (YYYY-MM-DD): ", a.date, DATE_LEN);
-        if (isValidDateFormat(a.date)) break;
+        if(isValidDateFormat(a.date)) break;
         printf("Please use the format YYYY-MM-DD.\n");
     }
-    while (1) {
+    while(1){
         readString("Follow-up time (HH:MM): ", a.time, TIME_LEN);
         if (isValidTimeFormat(a.time)) break;
         printf("Please use the format HH:MM.\n");
