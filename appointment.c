@@ -40,7 +40,7 @@ int findAppointmentById(Appointment list[], int count, int id)
     return -1;
 }
 
-const char *appointmentStatusText(int status) 
+const char* appointmentStatusText(int status) 
 {
     if (status == APPT_PENDING) 
     return "PENDING";
